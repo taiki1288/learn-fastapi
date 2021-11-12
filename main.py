@@ -1,21 +1,30 @@
-from fastapi import FastAPI 
-from pydantic import BaseModel
+from fastapi import FastAPI
+# FastAPIは、APIのすべての機能を提供するPythonクラス
 
 app = FastAPI()
-
-class Item(BaseModel):
-    name: str
-    price: float
-    is_order: bool = None
+# FastAPIのインスタンスを生成
 
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
+# パスオペレーションデコレータ
+# 直下の関数が下記のリクエストの処理を担当することをFastAPIに伝える
+async def root():
+    # パスオペレーション関数
+    # asyncではなく通常の関数でもOK！
+    return {"message": "Hello world"}
+    # dict型、list型、str型、int型などを返すことができる
 
 @app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
+# パスパラメータ item_idの値は引数item_idが渡される。(なんでもOK！)
+async def read_item(item_id: int):
+    # int型のitem_idを渡すようにする。int型のものが渡されている
+    return {"item_id": item_id}
 
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.Name, "item_id": item_id}
+@app.get("/users/me")
+async def read_user_me():
+    return {"/user_id": "the current user"}
+
+@app.get("/users/{user_id}")
+# パスパラメータuser_idの値は引数user_idが渡される。str型で定義されているので、str型のパスパラメータしか渡せない
+# パスパラメーターmeともマッチする
+async def read_user(user_id: str):
+    return {"/user_id": user_id}

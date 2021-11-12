@@ -1,5 +1,15 @@
+from enum import Enum
+
 from fastapi import FastAPI
 # FastAPIは、APIのすべての機能を提供するPythonクラス
+
+class ModelName(str, Enum):
+    # strとEnumを継承したサブクラス
+    # 第一引数strを継承することで値が文字列でなければいけないようになり正確にレンダリングできるようになる。
+    alexnet = "alexnet"
+    resnet = "resnet"
+    lenet = "lenet"
+    # 固定値のクラス属性を作り、その値が使用可能な値となる。
 
 app = FastAPI()
 # FastAPIのインスタンスを生成

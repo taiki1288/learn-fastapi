@@ -2,6 +2,11 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+class Item(BaseModel):
+    name: str
+    price: float
+    is_order: bool = None
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
